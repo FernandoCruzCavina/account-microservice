@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "account", schema = "account")
+@Table(name = "account")
 public class Account {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)

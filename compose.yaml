@@ -1,6 +1,6 @@
 services:
   account-service:
-    image: account-bank:1.0
+    image: bank-account:1.0
     ports:
       - '8080:8080'
     env_file:
