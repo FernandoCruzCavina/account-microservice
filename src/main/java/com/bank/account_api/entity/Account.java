@@ -5,7 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,5 +22,18 @@ public class Account {
     private double balance;
     private long date_opened;
     private String account_type;
+    private long user_id; 
 
+    public Account(double balance, String account_type, long user_id) {
+        this.balance = balance;
+        this.account_type = account_type;
+        this.user_id = user_id;
+    }
+
+    public Account(double balance, long date_opened, String account_type, long user_id) {
+        this.balance = balance;
+        this.date_opened = date_opened;
+        this.account_type = account_type;
+        this.user_id = user_id;
+    }
 }
