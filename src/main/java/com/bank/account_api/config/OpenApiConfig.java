@@ -7,13 +7,13 @@ import org.springframework.context.annotation.Configuration;
 
 @OpenAPIDefinition(
         info = @Info(
-                title = "User Authentication",
+                title = "Account API",
+                description = "API for managing bank accounts. Develompment by: \n-Fernando Cruz Cavina; \n -Samuel do Carmo Carvalho.",
                 contact = @Contact(
-                        name = "Fernando Cruz Cavina",
-                        url = "https://www.github.com/fernandocruzcavina",
-                        email = "fernando.cruz.cavina@gmail.com"
+                        name = "GitHub",
+                        url = "https://www.github.com/fernandocruzcavina/account-microservice"
                 ),
-                version = "1.0"
+                version = "1.1"
         )
         
 )
