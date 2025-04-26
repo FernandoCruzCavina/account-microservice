@@ -48,7 +48,7 @@ public class AccountService {
         
         return accountRepository.findAll().stream()
                 .map(accountMapper::toResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public ViewAccountDto updateAccount(long id, UpdateAccountDto accountRequest) {

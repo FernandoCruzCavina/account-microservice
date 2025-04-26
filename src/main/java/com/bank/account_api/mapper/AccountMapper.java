@@ -1,7 +1,6 @@
 package com.bank.account_api.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import com.bank.account_api.dto.CreateAccountDto;
 import com.bank.account_api.dto.ViewAccountDto;

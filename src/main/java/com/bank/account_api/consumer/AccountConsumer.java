@@ -1,7 +1,5 @@
 package com.bank.account_api.consumer;
 
-import javax.swing.text.View;
-
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
