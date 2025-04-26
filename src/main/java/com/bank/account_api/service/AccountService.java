@@ -1,18 +1,17 @@
 package com.bank.account_api.service;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bank.account_api.entity.Account;
-import com.bank.account_api.mapper.AccountMapper;
-import com.bank.account_api.repository.AccountRepository;
 import com.bank.account_api.dto.CreateAccountDto;
 import com.bank.account_api.dto.UpdateAccountDto;
 import com.bank.account_api.dto.ViewAccountDto;
-
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.bank.account_api.entity.Account;
+import com.bank.account_api.mapper.AccountMapper;
+import com.bank.account_api.repository.AccountRepository;
 
 @Service
 public class AccountService {
@@ -27,25 +26,27 @@ public class AccountService {
     }
 
     public ViewAccountDto createAccount(CreateAccountDto accountRequest) {
-        accountRepository.findById(accountRequest.user_id())
-                .ifPresent(account -> {throw new RuntimeException("Account already exists with ID: " + accountRequest.user_id());});
+        accountRepository.findById(accountRequest.userId())
+                .ifPresent(account -> {
+                    throw new RuntimeException("Account already exists with ID: " + accountRequest.userId());
+                });
 
         Account account = accountMapper.toEntity(accountRequest);
-        account.setDate_opened(new Date().getTime());
+        account.setDateOpened(new Date().getTime());
         Account savedAccount = accountRepository.save(account);
-        
+
         return accountMapper.toResponse(savedAccount);
     }
 
     public ViewAccountDto getAccountById(long id) {
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Account not found"));
-        
+
         return accountMapper.toResponse(account);
     }
 
     public List<ViewAccountDto> getAllAccounts() {
-        
+
         return accountRepository.findAll().stream()
                 .map(accountMapper::toResponse)
                 .toList();
@@ -64,9 +65,9 @@ public class AccountService {
     public ViewAccountDto deleteAccountById(long id) {
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Account not found"));
-                
+
         accountRepository.deleteById(id);
 
         return accountMapper.toResponse(account);
-    }    
+    }
 }

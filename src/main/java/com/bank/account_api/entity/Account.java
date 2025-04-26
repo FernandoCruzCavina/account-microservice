@@ -1,5 +1,6 @@
 package com.bank.account_api.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -20,20 +21,23 @@ public class Account {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private long id;
     private double balance;
-    private long date_opened;
-    private String account_type;
-    private long user_id; 
+    @Column(name = "date_opened")
+    private long dateOpened;
+    @Column(name = "account_type")
+    private String accountType;
+    @Column(name = "user_id")
+    private long userId; 
 
-    public Account(double balance, String account_type, long user_id) {
+    public Account(double balance, String accountType, long userId) {
         this.balance = balance;
-        this.account_type = account_type;
-        this.user_id = user_id;
+        this.accountType = accountType;
+        this.userId = userId;
     }
 
-    public Account(double balance, long date_opened, String account_type, long user_id) {
+    public Account(double balance, long dateOpened, String accountType, long userId) {
         this.balance = balance;
-        this.date_opened = date_opened;
-        this.account_type = account_type;
-        this.user_id = user_id;
+        this.dateOpened = dateOpened;
+        this.accountType = accountType;
+        this.userId = userId;
     }
 }

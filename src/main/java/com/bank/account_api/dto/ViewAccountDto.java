@@ -1,12 +1,11 @@
 package com.bank.account_api.dto;
 
 public record ViewAccountDto(
-    long id, 
-    double balance, 
-    long date_opened, 
-    String account_type,
-    long user_id 
-) {
+        long id,
+        double balance,
+        long dateOpened,
+        String accountType,
+        long userId) {
     public ViewAccountDto {
         if (id <= 0) {
             throw new IllegalArgumentException("ID must be greater than 0");
@@ -14,13 +13,13 @@ public record ViewAccountDto(
         if (balance < 0) {
             throw new IllegalArgumentException("Balance cannot be negative");
         }
-        if (date_opened <= 0) {
+        if (dateOpened <= 0) {
             throw new IllegalArgumentException("Date opened must be greater than 0");
         }
-        if (account_type == null || account_type.isEmpty()) {
+        if (accountType == null || accountType.isEmpty()) {
             throw new IllegalArgumentException("Account type cannot be null or empty");
         }
-        if (user_id <= 0) {
+        if (userId <= 0) {
             throw new IllegalArgumentException("User ID must be greater than 0");
         }
     }
