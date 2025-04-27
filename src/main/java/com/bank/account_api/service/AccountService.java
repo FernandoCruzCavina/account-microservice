@@ -10,6 +10,8 @@ import com.bank.account_api.dto.CreateAccountDto;
 import com.bank.account_api.dto.UpdateAccountDto;
 import com.bank.account_api.dto.ViewAccountDto;
 import com.bank.account_api.entity.Account;
+import com.bank.account_api.exception.AccountAlreadyExist;
+import com.bank.account_api.exception.AccountNotFoundException;
 import com.bank.account_api.mapper.AccountMapper;
 import com.bank.account_api.repository.AccountRepository;
 
@@ -28,7 +30,7 @@ public class AccountService {
     public ViewAccountDto createAccount(CreateAccountDto accountRequest) {
         accountRepository.findById(accountRequest.userId())
                 .ifPresent(account -> {
-                    throw new RuntimeException("Account already exists with ID: " + accountRequest.userId());
+                    throw new AccountAlreadyExist("Account already exists with user ID: " + account.getId());
                 });
 
         Account account = accountMapper.toEntity(accountRequest);
@@ -40,7 +42,7 @@ public class AccountService {
 
     public ViewAccountDto getAccountById(long id) {
         Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Account not found"));
+                .orElseThrow(() -> new AccountNotFoundException("Account not found with ID: " + id));
 
         return accountMapper.toResponse(account);
     }
@@ -54,7 +56,7 @@ public class AccountService {
 
     public ViewAccountDto updateAccount(long id, UpdateAccountDto accountRequest) {
         Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Account not found"));
+                .orElseThrow(() -> new AccountNotFoundException("Account not found with ID: " + id));
 
         account.setBalance(accountRequest.balance());
         Account updatedAccount = accountRepository.save(account);
@@ -64,7 +66,7 @@ public class AccountService {
 
     public ViewAccountDto deleteAccountById(long id) {
         Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Account not found"));
+                .orElseThrow(() -> new AccountNotFoundException("Account not found with ID: " + id));
 
         accountRepository.deleteById(id);
 
