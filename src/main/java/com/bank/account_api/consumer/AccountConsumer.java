@@ -23,7 +23,7 @@ public class AccountConsumer {
 
     private String routingKey = "payment.replies";
 
-    @RabbitListener(queues = "${broker.queue.user.name}")
+    @RabbitListener(queues = "${broker.queue.account}")
     public void replyAccount(long id) {
         ViewAccountDto account = accountService.getAccountById(id);
 

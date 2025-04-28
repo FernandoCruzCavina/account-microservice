@@ -37,28 +37,37 @@ jobs:
       - name: Set application-test.properties
         run: |
           mkdir -p src/test/resources
-          cat <<EOF > src/test/resources/application-test.properties
+          echo "
           spring.flyway.enabled=false
-          EOF
 
-      - name: Set application.properties para ambiente de produção
+          spring.datasource.url=${{ secrets.TEST_DATASOURCE_URL }}
+          spring.datasource.username=${{ secrets.TEST_DATASOURCE_USERNAME }}
+          spring.datasource.password=
+          spring.datasource.driver-class-name=org.h2.Driver
+          spring.jpa.hibernate.ddl-auto=create-drop
+
+          spring.rabbitmq.addresses=${{ secrets.RABBITMQ_ADDRESSES }}
+          broker.queue.account=${{ secrets.BROKER_QUEUE_USER_NAME }}
+          " > src/test/resources/application-test.properties
+
+      - name: Set application.properties
         run: |
           mkdir -p src/main/resources
-          cat <<EOF > src/main/resources/application.properties
-          spring.datasource.url=${{ secrets.DATASOURCE_URL }}
-          spring.datasource.username=${{ secrets.DATASOURCE_USERNAME }}
-          spring.datasource.password=${{ secrets.DATASOURCE_PASSWORD }}
-          spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+          echo "
+          spring.datasource.url=${{ secrets.TEST_DATASOURCE_URL }}
+          spring.datasource.username=${{ secrets.TEST_DATASOURCE_USERNAME }}
+          spring.datasource.password=
+          spring.datasource.driver-class-name=org.h2.Driver
 
           spring.flyway.url=${{ secrets.FLYWAY_URL }}
           spring.flyway.user=${{ secrets.FLYWAY_USER }}
           spring.flyway.password=${{ secrets.FLYWAY_PASSWORD }}
-          spring.flyway.locations=db/migrations
-          spring.flyway.enabled=true
+          spring.flyway.locations=classpath:db/migrations
+          spring.flyway.enabled=false
 
           spring.rabbitmq.addresses=${{ secrets.RABBITMQ_ADDRESSES }}
-          broker.queue.user.name=${{ secrets.BROKER_QUEUE_USER_NAME }}
-          EOF
+          broker.queue.account=${{ secrets.BROKER_QUEUE_USER_NAME }}
+          " > src/main/resources/application.properties
 
       - name: Build and analyze 
         run: |

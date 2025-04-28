@@ -1,10 +1,10 @@
 package com.bank.account_api.dto;
 
+import com.bank.account_api.exception.ValidationUtils;
+
 public record UpdateAccountDto(
         double balance) {
     public UpdateAccountDto {
-        if (balance < 0) {
-            throw new IllegalArgumentException("Balance cannot be negative");
-        }
+        ValidationUtils.validateBalance(balance);
     }
 }

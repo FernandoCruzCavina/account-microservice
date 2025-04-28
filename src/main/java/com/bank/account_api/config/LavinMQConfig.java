@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 public class LavinMQConfig {
-    @Value("${broker.queue.user.name}")
+    @Value("${broker.queue.account}")
     public String queueName;
 
     @Bean

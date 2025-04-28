@@ -46,7 +46,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void testCreateAccount() {
+    void createAccount() {
         when(accountMapper.toEntity(accountRequest)).thenReturn(account);
         when(accountRepository.save(any(Account.class))).thenReturn(account);
         when(accountMapper.toResponse(account)).thenReturn(accountResponse);
@@ -58,7 +58,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void testDeleteAccountById() {
+    void deleteAccountById() {
         long accountId = 1L;
         when(accountRepository.findById(accountId)).thenReturn(Optional.of(account));
         when(accountMapper.toResponse(account)).thenReturn(accountResponse);
@@ -70,7 +70,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void testGetAccountById() {
+    void getAccountById() {
         long accountId = 1L;
         when(accountRepository.findById(accountId)).thenReturn(Optional.of(account));
         when(accountMapper.toResponse(account)).thenReturn(accountResponse);
@@ -82,7 +82,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void testGetAllAccounts() {
+    void getAllAccounts() {
         when(accountRepository.findAll()).thenReturn(List.of(account));
         when(accountMapper.toResponse(account)).thenReturn(accountResponse);
 
@@ -94,7 +94,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void testUpdateAccount() {
+    void updateAccount() {
         long accountId = 1L;
         UpdateAccountDto updateRequest = new UpdateAccountDto(2000.0);
         Account updatedAccount = new Account(1L, 2000.0, 1672531199L, "TEST", 1L);

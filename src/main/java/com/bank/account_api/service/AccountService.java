@@ -28,9 +28,9 @@ public class AccountService {
     }
 
     public ViewAccountDto createAccount(CreateAccountDto accountRequest) {
-        accountRepository.findById(accountRequest.userId())
+        accountRepository.findByUserId(accountRequest.userId())
                 .ifPresent(account -> {
-                    throw new AccountAlreadyExist("Account already exists with user ID: " + account.getId());
+                    throw new AccountAlreadyExist(account.getUserId());
                 });
 
         Account account = accountMapper.toEntity(accountRequest);
@@ -42,7 +42,7 @@ public class AccountService {
 
     public ViewAccountDto getAccountById(long id) {
         Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new AccountNotFoundException("Account not found with ID: " + id));
+                .orElseThrow(() -> new AccountNotFoundException(id));
 
         return accountMapper.toResponse(account);
     }
@@ -56,7 +56,7 @@ public class AccountService {
 
     public ViewAccountDto updateAccount(long id, UpdateAccountDto accountRequest) {
         Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new AccountNotFoundException("Account not found with ID: " + id));
+                .orElseThrow(() -> new AccountNotFoundException(id));
 
         account.setBalance(accountRequest.balance());
         Account updatedAccount = accountRepository.save(account);
@@ -66,7 +66,7 @@ public class AccountService {
 
     public ViewAccountDto deleteAccountById(long id) {
         Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new AccountNotFoundException("Account not found with ID: " + id));
+                .orElseThrow(() -> new AccountNotFoundException(id));
 
         accountRepository.deleteById(id);
 
