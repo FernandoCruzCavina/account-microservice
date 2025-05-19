@@ -2,7 +2,6 @@ package com.bank.account_api.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,16 +33,17 @@ public class AccountController {
 
         private final AccountService accountService;
 
-        @Autowired
         public AccountController(AccountService accountService) {
                 this.accountService = accountService;
         }
 
-        @Operation(description = "Create a new account", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, description = "Details of the account to be created", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateAccountDto.class), examples = @ExampleObject(name = "new account", value = "{\"balance\": \"2000\"," +
+        @Operation(description = "Create a new account", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, description = "Details of the account to be created", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateAccountDto.class), examples = @ExampleObject(name = "new account", value = "{\"balance\": \"2000\","
+                        +
                         "\"accountType\": \"STANDARD\"," +
                         "\"userId\": \"12\"}", description = "Warning: user_id must be valid"))))
-        @ApiResponses(@ApiResponse(responseCode = "201", description = "Account created successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ViewAccountDto.class), examples = @ExampleObject(value = 
-                        "{\"id\": \"1\"," +
+
+        @ApiResponses(@ApiResponse(responseCode = "201", description = "Account created successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ViewAccountDto.class), examples = @ExampleObject(value = "{\"id\": \"1\","
+                        +
                         "\"balance\": \"2000\"," +
                         "\"accountType\": \"STANDARD\"," +
                         "\"userId\": \"12\"}", name = "account created"))))
@@ -54,8 +54,8 @@ public class AccountController {
         }
 
         @Operation(description = "Get account details by ID", parameters = @io.swagger.v3.oas.annotations.Parameter(name = "id", description = "ID of the account to retrieve", required = true, example = "1"))
-        @ApiResponses(@ApiResponse(responseCode = "200", description = "Account retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ViewAccountDto.class), examples = @ExampleObject(value = 
-                        "{\"id\": \"1\"," +
+        @ApiResponses(@ApiResponse(responseCode = "200", description = "Account retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ViewAccountDto.class), examples = @ExampleObject(value = "{\"id\": \"1\","
+                        +
                         "\"balance\": \"2000\"," +
                         "\"accountType\": \"STANDARD\"," +
                         "\"userId\": \"12\"}", name = "account details"))))
@@ -66,8 +66,8 @@ public class AccountController {
         }
 
         @Operation(description = "Get all accounts")
-        @ApiResponses(@ApiResponse(responseCode = "200", description = "List of all accounts", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ViewAccountDto.class), examples = @ExampleObject(value = 
-                        "[{\"id\": \"1\"," +
+        @ApiResponses(@ApiResponse(responseCode = "200", description = "List of all accounts", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ViewAccountDto.class), examples = @ExampleObject(value = "[{\"id\": \"1\","
+                        +
                         "\"balance\": \"2000\"," +
                         "\"accountType\": \"STANDARD\"," +
                         "\"userId\": \"12\"}]", name = "list of accounts"))))
@@ -78,8 +78,8 @@ public class AccountController {
         }
 
         @Operation(description = "Update an account by ID", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, description = "Details to update the account", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateAccountDto.class), examples = @ExampleObject(name = "update account", value = "{\"balance\": \"3000\"}", description = "Only balance can be updated"))), parameters = @io.swagger.v3.oas.annotations.Parameter(name = "id", description = "ID of the account to update", required = true, example = "1"))
-        @ApiResponses(@ApiResponse(responseCode = "200", description = "Account updated successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ViewAccountDto.class), examples = @ExampleObject(value = 
-                        "{\"id\": \"1\"," +
+        @ApiResponses(@ApiResponse(responseCode = "200", description = "Account updated successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ViewAccountDto.class), examples = @ExampleObject(value = "{\"id\": \"1\","
+                        +
                         "\"balance\": \"3000\"," +
                         "\"accountType\": \"STANDARD\"," +
                         "\"userId\": \"12\"}", name = "updated account"))))
@@ -91,8 +91,8 @@ public class AccountController {
         }
 
         @Operation(description = "Delete an account by ID", parameters = @io.swagger.v3.oas.annotations.Parameter(name = "id", description = "ID of the account to delete", required = true, example = "1"))
-        @ApiResponses(@ApiResponse(responseCode = "200", description = "Account deleted successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ViewAccountDto.class), examples = @ExampleObject(value = 
-                        "{\"id\": \"1\"," +
+        @ApiResponses(@ApiResponse(responseCode = "200", description = "Account deleted successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ViewAccountDto.class), examples = @ExampleObject(value = "{\"id\": \"1\","
+                        +
                         "\"balance\": \"2000\"," +
                         "\"accountType\": \"STANDARD\"," +
                         "\"userId\": \"12\"}", name = "deleted account"))))

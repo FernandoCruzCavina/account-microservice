@@ -3,10 +3,11 @@ package com.bank.account_api.repository;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.bank.account_api.entity.Account;
 
-public interface AccountRepository extends JpaRepository<Account, Long>{
+import com.bank.account_api.models.AccountModel;
 
-    Optional<Account> findByUserId(long userId);
+public interface AccountRepository extends JpaRepository<AccountModel, Long> {
+
+    Optional<AccountModel> findByUserId(long userId);
 
 }

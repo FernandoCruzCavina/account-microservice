@@ -4,13 +4,13 @@ import org.mapstruct.Mapper;
 
 import com.bank.account_api.dto.CreateAccountDto;
 import com.bank.account_api.dto.ViewAccountDto;
-import com.bank.account_api.entity.Account;
+import com.bank.account_api.models.AccountModel;
 
 @Mapper(componentModel = "spring")
 public interface AccountMapper {
-    ViewAccountDto toResponse(Account account);
+    ViewAccountDto toResponse(AccountModel account);
 
-    Account toEntity(CreateAccountDto accountRequest);
+    AccountModel toEntity(CreateAccountDto accountRequest);
 
-    Account toEntity(ViewAccountDto accountResponse);
+    AccountModel toEntity(ViewAccountDto accountResponse);
 }

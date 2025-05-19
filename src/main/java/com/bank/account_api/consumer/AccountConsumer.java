@@ -2,7 +2,6 @@ package com.bank.account_api.consumer;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bank.account_api.dto.ViewAccountDto;
@@ -15,7 +14,6 @@ public class AccountConsumer {
 
     private AccountService accountService;
 
-    @Autowired
     public AccountConsumer(RabbitTemplate rabbitTemplate, AccountService accountService) {
         this.rabbitTemplate = rabbitTemplate;
         this.accountService = accountService;

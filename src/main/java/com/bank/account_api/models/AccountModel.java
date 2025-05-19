@@ -1,4 +1,4 @@
-package com.bank.account_api.entity;
+package com.bank.account_api.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,25 +16,29 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "account")
-public class Account {
+public class AccountModel {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private long id;
+
     private double balance;
+
     @Column(name = "date_opened")
     private long dateOpened;
+
     @Column(name = "account_type")
     private String accountType;
-    @Column(name = "user_id")
-    private long userId; 
 
-    public Account(double balance, String accountType, long userId) {
+    @Column(name = "user_id")
+    private long userId;
+
+    public AccountModel(double balance, String accountType, long userId) {
         this.balance = balance;
         this.accountType = accountType;
         this.userId = userId;
     }
 
-    public Account(double balance, long dateOpened, String accountType, long userId) {
+    public AccountModel(double balance, long dateOpened, String accountType, long userId) {
         this.balance = balance;
         this.dateOpened = dateOpened;
         this.accountType = accountType;

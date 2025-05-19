@@ -6,6 +6,7 @@ public record CreateAccountDto(
         double balance,
         String accountType,
         long userId) {
+
     public CreateAccountDto {
         ValidationUtils.validateBalance(balance);
         ValidationUtils.validateAccountType(accountType);
