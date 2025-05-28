@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -44,7 +48,8 @@ public class AccountModel implements Serializable {
     private long userId;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<PixModel> pixs;
 
     public AccountModel(double balance, String accountType, long userId) {
