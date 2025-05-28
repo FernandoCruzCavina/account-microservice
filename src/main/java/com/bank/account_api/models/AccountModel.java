@@ -1,9 +1,16 @@
 package com.bank.account_api.models;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +23,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "account")
-public class AccountModel {
+public class AccountModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private long id;
@@ -32,6 +41,17 @@ public class AccountModel {
     @Column(name = "user_id")
     private long userId;
 
+    @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime creationDate;
+
+    @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime lastUpdateDate;
+
+    @OneToMany(mappedBy = "account")
+    private Set<PixModel> pixs;
+
     public AccountModel(double balance, String accountType, long userId) {
         this.balance = balance;
         this.accountType = accountType;
@@ -44,4 +64,5 @@ public class AccountModel {
         this.accountType = accountType;
         this.userId = userId;
     }
+
 }

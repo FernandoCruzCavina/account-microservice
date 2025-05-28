@@ -18,10 +18,6 @@ public class PixService {
         pixRepository.save(pixModel);
     }
 
-    public boolean existsByKey(String key) {
-        return pixRepository.existsByKey(key);
-    }
-
     public List<PixModel> findAll() {
         return pixRepository.findAll();
     }

@@ -19,14 +19,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bank.account_api.dto.PixDto;
 import com.bank.account_api.enums.PixKeyType;
 import com.bank.account_api.models.PixModel;
+import com.bank.account_api.service.AccountService;
 import com.bank.account_api.service.PixService;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping
 public class PixController {
+
+    private final AccountService accountService;
     @Autowired
     PixService pixService;
+
+    PixController(AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     @GetMapping()
     public ResponseEntity<List<PixModel>> getAllPixs() {
@@ -58,11 +65,12 @@ public class PixController {
         }
     }
 
-    @PostMapping("/register")
+    @PostMapping("/{idPix}")
     public ResponseEntity<Object> registerPix(@RequestBody PixDto pixDto) {
-        if (pixService.existsByKey(pixDto.getKey())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Key is already taken!");
-        }
+        // if (accountService.existsByKey(pixDto.getKey())) {
+        // return ResponseEntity.status(HttpStatus.CONFLICT).body("Key is already
+        // taken!");
+        // }
 
         var pixModel = new PixModel();
 

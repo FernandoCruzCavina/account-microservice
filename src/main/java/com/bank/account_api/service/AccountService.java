@@ -70,4 +70,9 @@ public class AccountService {
 
         return accountMapper.toResponse(account);
     }
+
+    // public boolean existsByKey(String key) {
+    // return accountRepository.existsByKey(key);
+    // }
+
 }

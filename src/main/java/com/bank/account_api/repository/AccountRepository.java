@@ -10,4 +10,6 @@ public interface AccountRepository extends JpaRepository<AccountModel, Long> {
 
     Optional<AccountModel> findByUserId(long userId);
 
+    // boolean existsByKey(String key);
+
 }

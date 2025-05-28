@@ -2,13 +2,18 @@ package com.bank.account_api.models;
 
 import java.io.Serializable;
 
+import org.hibernate.annotations.ManyToAny;
+
 import com.bank.account_api.enums.PixKeyType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -24,9 +29,13 @@ public class PixModel implements Serializable {
     private Long idPIX;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private PixKeyType pixKeyType;
 
     @Column(name = "pix_key", nullable = false, unique = true)
     private String key;
+
+    @ManyToOne(optional = false)
+    private AccountModel account;
 
 }
