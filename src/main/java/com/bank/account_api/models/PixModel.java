@@ -6,6 +6,7 @@ import org.hibernate.annotations.ManyToAny;
 
 import com.bank.account_api.enums.PixKeyType;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,6 +36,7 @@ public class PixModel implements Serializable {
     @Column(name = "pix_key", nullable = false, unique = true)
     private String key;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(optional = false)
     private AccountModel account;
 
