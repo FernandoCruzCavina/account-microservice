@@ -1,68 +1,49 @@
 package com.bank.account_api.models;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Set;
+import java.math.BigDecimal;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.bank.account_api.enums.AccountType;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "account")
+@Table(name = "TB_ACCOUNTS")
 public class AccountModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    private long idAccount;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idAccount;
 
-    @Column(name = "balance")
-    private double balance;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
 
-    @Column(name = "date_opened")
-    private long dateOpened;
+    @Column(nullable = false, unique = true)
+    private String accountNumber;
 
-    @Column(name = "account_type")
-    private String accountType;
+    @Column(nullable = false)
+    private BigDecimal balance;
 
-    @Column(name = "user_id")
-    private long userId;
+    @Column(nullable = false)
+    private Long createOn;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
-    @Fetch(FetchMode.SUBSELECT)
-    private Set<PixModel> pixs;
+    @Column(nullable = false)
+    private Long updatedOn;
 
-    public AccountModel(double balance, String accountType, long userId) {
-        this.balance = balance;
-        this.accountType = accountType;
-        this.userId = userId;
-    }
-
-    public AccountModel(double balance, long dateOpened, String accountType, long userId) {
-        this.balance = balance;
-        this.dateOpened = dateOpened;
-        this.accountType = accountType;
-        this.userId = userId;
-    }
+    @Column(nullable = true)
+    private String imageUrl;
 
 }
