@@ -15,4 +15,5 @@ public interface PixService {
     public Optional<PixModel> findPixIntoCourse(Long idAccount, Long idPix);
 
     public List<PixModel> findAllByAccount(Long idAccount);
+
 }

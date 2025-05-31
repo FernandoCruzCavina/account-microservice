@@ -65,7 +65,7 @@ public class AccountController {
         accountModel.setCreatedAt(new Date().getTime());
         accountModel.setLastUpdatedAt(new Date().getTime());
 
-        accountService.save(accountModel);
+        accountService.saveAccount(accountModel);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(accountModel);
     }

@@ -11,9 +11,12 @@ public interface AccountService {
 
     Optional<AccountModel> findById(Long accountId);
 
-    void save(AccountModel accountModel);
+    AccountModel save(AccountModel accountModel);
 
     boolean existsByAccountNumber(String accountNumber);
 
     void delete(AccountModel accountModel);
+
+    AccountModel saveAccount(AccountModel accountModel);
+
 }

@@ -6,7 +6,9 @@ import java.util.Set;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.beans.BeanUtils;
 
+import com.bank.account_api.dtos.AccountEventDto;
 import com.bank.account_api.enums.AccountType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -56,4 +58,12 @@ public class AccountModel implements Serializable {
     @OneToMany(mappedBy = "accountModel")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<PixModel> pixs;
+
+    public AccountEventDto convertToAccountEventDto() {
+        var accountEventDto = new AccountEventDto();
+
+        BeanUtils.copyProperties(this, accountEventDto);
+
+        return accountEventDto;
+    }
 }

@@ -6,15 +6,22 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bank.account_api.enums.ActionType;
 import com.bank.account_api.models.AccountModel;
+import com.bank.account_api.publishers.AccountEventPublisher;
 import com.bank.account_api.repository.AccountRepository;
 import com.bank.account_api.services.AccountService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    AccountEventPublisher accountEventPublisher;
 
     @Override
     public List<AccountModel> findAll() {
@@ -27,8 +34,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void save(AccountModel accountModel) {
-        accountRepository.save(accountModel);
+    public AccountModel save(AccountModel accountModel) {
+        return accountRepository.save(accountModel);
     }
 
     @Override
@@ -39,6 +46,15 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void delete(AccountModel accountModel) {
         accountRepository.delete(accountModel);
+    }
+
+    @Transactional
+    @Override
+    public AccountModel saveAccount(AccountModel accountModel) {
+        accountModel = save(accountModel);
+
+        accountEventPublisher.publishAccountEvent(accountModel.convertToAccountEventDto(), ActionType.CREATE);
+        return accountModel;
     }
 
 }
