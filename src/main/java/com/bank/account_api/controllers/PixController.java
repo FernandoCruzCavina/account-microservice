@@ -38,13 +38,13 @@ public class PixController {
     @Autowired
     AccountService accountService;
 
-    @GetMapping("/account/{idAccount}/pix")
+    @GetMapping("/accounts/{idAccount}/pix")
     public ResponseEntity<List<PixModel>> getAllPixs(@PathVariable("idAccount") Long idAccount) {
         return ResponseEntity.status(HttpStatus.OK).body(pixService.findAllByAccount(idAccount));
 
     }
 
-    @GetMapping("/account/{idAccount}/pix/{idPix}")
+    @GetMapping("/accounts/{idAccount}/pix/{idPix}")
     public ResponseEntity<Object> getOnePix(@PathVariable("idAccount") Long idAccount,
             @PathVariable("idPix") Long idPix) {
         Optional<PixModel> pixModelOptional = pixService.findPixIntoCourse(idAccount, idPix);
@@ -56,7 +56,7 @@ public class PixController {
 
     }
 
-    @DeleteMapping("/account/{idAccount}/pix/{idPix}")
+    @DeleteMapping("/accounts/{idAccount}/pix/{idPix}")
     public ResponseEntity<Object> deletePix(@PathVariable("idAccount") Long idAccount,
             @PathVariable("idPix") Long idPix) {
 
@@ -70,7 +70,7 @@ public class PixController {
         }
     }
 
-    @PostMapping("/account/{idAccount}/pix")
+    @PostMapping("/accounts/{idAccount}/pix")
     public ResponseEntity<Object> savePix(@PathVariable(value = "idAccount") long idAccount,
             @RequestBody @Valid PixDto pixDto) {
 
@@ -94,7 +94,7 @@ public class PixController {
         return ResponseEntity.status(HttpStatus.CREATED).body(pixModel);
     }
 
-    @PutMapping("/account/{idAccount}/pix/{idPix}")
+    @PutMapping("/accounts/{idAccount}/pix/{idPix}")
     public ResponseEntity<Object> updatePix(@PathVariable("idAccount") Long idAccount,
             @PathVariable("idPix") Long idPix, @RequestBody @Valid PixDto pixDto) {
         Optional<PixModel> pixModelOptional = pixService.findPixIntoCourse(idAccount, idPix);
@@ -104,8 +104,6 @@ public class PixController {
         }
 
         PixModel pix = pixModelOptional.get();
-
-        // BeanUtils.copyProperties(pixDto, pixModel);
 
         pix.setKey(pixDto.getKey());
         pix.setLastUpdatedAt(new Date().getTime());
