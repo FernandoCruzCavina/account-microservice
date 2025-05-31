@@ -1,13 +1,8 @@
 package com.bank.account_api.models;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Set;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import com.bank.account_api.enums.AccountType;
+import com.bank.account_api.enums.PixKeyType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -16,32 +11,28 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "TB_ACCOUNTS")
-public class AccountModel implements Serializable {
+@Table(name = "TB_PIXS")
+public class PixModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAccount;
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    private Long idPix;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private AccountType accountType;
+    private PixKeyType pixKeyType;
 
-    @Column(nullable = false, unique = true)
-    private String accountNumber;
-
-    @Column(nullable = false)
-    private BigDecimal balance;
+    @Column(name = "pix_key", nullable = false, unique = true)
+    private String key;
 
     @Column(nullable = false)
     private Long createdAt;
@@ -49,11 +40,7 @@ public class AccountModel implements Serializable {
     @Column(nullable = false)
     private Long lastUpdatedAt;
 
-    @Column(nullable = true)
-    private String imageUrl;
-
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "accountModel")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<PixModel> pixs;
+    @ManyToOne(optional = false)
+    private AccountModel accountModel;
 }

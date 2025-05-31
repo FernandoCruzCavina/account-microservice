@@ -62,8 +62,8 @@ public class AccountController {
         BeanUtils.copyProperties(accountDto, accountModel);
 
         accountModel.setAccountType(AccountType.STARDART);
-        accountModel.setCreateOn(new Date().getTime());
-        accountModel.setUpdatedOn(new Date().getTime());
+        accountModel.setCreatedAt(new Date().getTime());
+        accountModel.setLastUpdatedAt(new Date().getTime());
 
         accountService.save(accountModel);
 
@@ -84,7 +84,7 @@ public class AccountController {
         accountModel.setAccountNumber(accountDto.getAccountNumber());
         accountModel.setBalance(accountDto.getBalance());
         accountModel.setImageUrl(accountDto.getImageUrl());
-        accountModel.setUpdatedOn(new Date().getTime());
+        accountModel.setLastUpdatedAt(new Date().getTime());
 
         accountService.save(accountModel);
         return ResponseEntity.status(HttpStatus.OK).body(accountModel);
@@ -101,7 +101,6 @@ public class AccountController {
             accountService.delete(accountModelOptional.get());
             return ResponseEntity.status(HttpStatus.OK).body("account deleted sucessfully!");
         }
-
     }
 
 }
