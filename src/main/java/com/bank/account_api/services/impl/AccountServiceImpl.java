@@ -48,6 +48,11 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.delete(accountModel);
     }
 
+    @Override
+    public Optional<AccountModel> findByPixKey(String pixKey) {
+        return accountRepository.findByPixKey(pixKey);
+    }
+
     @Transactional
     @Override
     public AccountModel saveAccount(AccountModel accountModel) {

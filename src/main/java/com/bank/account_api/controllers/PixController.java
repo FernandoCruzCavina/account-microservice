@@ -38,13 +38,13 @@ public class PixController {
     @Autowired
     AccountService accountService;
 
-    @GetMapping("/accounts/{idAccount}/pix")
+    @GetMapping("/{idAccount}/pix")
     public ResponseEntity<List<PixModel>> getAllPixs(@PathVariable("idAccount") Long idAccount) {
         return ResponseEntity.status(HttpStatus.OK).body(pixService.findAllByAccount(idAccount));
 
     }
 
-    @GetMapping("/accounts/{idAccount}/pix/{idPix}")
+    @GetMapping("/{idAccount}/pix/{idPix}")
     public ResponseEntity<Object> getOnePix(@PathVariable("idAccount") Long idAccount,
             @PathVariable("idPix") Long idPix) {
         Optional<PixModel> pixModelOptional = pixService.findPixIntoCourse(idAccount, idPix);
@@ -56,7 +56,7 @@ public class PixController {
 
     }
 
-    @DeleteMapping("/accounts/{idAccount}/pix/{idPix}")
+    @DeleteMapping("/{idAccount}/pix/{idPix}")
     public ResponseEntity<Object> deletePix(@PathVariable("idAccount") Long idAccount,
             @PathVariable("idPix") Long idPix) {
 
@@ -70,7 +70,7 @@ public class PixController {
         }
     }
 
-    @PostMapping("/accounts/{idAccount}/pix")
+    @PostMapping("/{idAccount}/pix")
     public ResponseEntity<Object> savePix(@PathVariable(value = "idAccount") long idAccount,
             @RequestBody @Valid PixDto pixDto) {
 
@@ -94,7 +94,7 @@ public class PixController {
         return ResponseEntity.status(HttpStatus.CREATED).body(pixModel);
     }
 
-    @PutMapping("/accounts/{idAccount}/pix/{idPix}")
+    @PutMapping("/{idAccount}/pix/{idPix}")
     public ResponseEntity<Object> updatePix(@PathVariable("idAccount") Long idAccount,
             @PathVariable("idPix") Long idPix, @RequestBody @Valid PixDto pixDto) {
         Optional<PixModel> pixModelOptional = pixService.findPixIntoCourse(idAccount, idPix);

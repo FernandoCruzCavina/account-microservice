@@ -19,4 +19,5 @@ public interface AccountService {
 
     AccountModel saveAccount(AccountModel accountModel);
 
+    Optional<AccountModel> findByPixKey(String pixKey);
 }

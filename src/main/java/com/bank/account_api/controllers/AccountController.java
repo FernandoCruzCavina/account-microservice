@@ -27,7 +27,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/accounts")
+@RequestMapping()
 public class AccountController {
 
     @Autowired
@@ -44,6 +44,18 @@ public class AccountController {
 
         if (!accountModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found");
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(accountModelOptional.get());
+        }
+
+    }
+
+    @GetMapping("/pix/{pixKey}")
+    public ResponseEntity<Object> getAccountByPixKey(@PathVariable(value = "pixKey") String pixKey) {
+        Optional<AccountModel> accountModelOptional = accountService.findByPixKey(pixKey);
+
+        if (!accountModelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found!");
         } else {
             return ResponseEntity.status(HttpStatus.OK).body(accountModelOptional.get());
         }
