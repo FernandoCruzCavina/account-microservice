@@ -90,7 +90,7 @@ public class PixController {
 
         pixModel.setAccountModel(accountModeOptional.get());
 
-        pixService.save(pixModel);
+        pixService.savePix(pixModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(pixModel);
     }
 

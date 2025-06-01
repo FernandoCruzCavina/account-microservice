@@ -6,17 +6,24 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bank.account_api.enums.ActionType;
 import com.bank.account_api.models.PixModel;
+import com.bank.account_api.publishers.PixEventPublisher;
 import com.bank.account_api.repository.PixRepository;
 import com.bank.account_api.services.PixService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class PixServiceImpl implements PixService {
     @Autowired
     PixRepository pixRepository;
 
-    public void save(PixModel pixModel) {
-        pixRepository.save(pixModel);
+    @Autowired
+    PixEventPublisher pixEventPublisher;
+
+    public PixModel save(PixModel pixModel) {
+        return pixRepository.save(pixModel);
     }
 
     public Optional<PixModel> findById(Long idPix) {
@@ -36,5 +43,14 @@ public class PixServiceImpl implements PixService {
     @Override
     public List<PixModel> findAllByAccount(Long idAccount) {
         return pixRepository.findAllPixsIntoAccount(idAccount);
+    }
+
+    @Transactional
+    @Override
+    public PixModel savePix(PixModel pixModel) {
+        pixModel = save(pixModel);
+
+        pixEventPublisher.publishAccountEvent(pixModel.convertToPixEventDto(), ActionType.CREATE);
+        return pixModel;
     }
 }
