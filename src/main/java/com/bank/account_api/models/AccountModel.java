@@ -21,6 +21,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -53,6 +54,11 @@ public class AccountModel implements Serializable {
 
     @Column(nullable = true)
     private String imageUrl;
+ 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToOne(mappedBy = "accountModel")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private UserModel user;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "accountModel")

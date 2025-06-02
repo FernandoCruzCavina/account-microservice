@@ -62,6 +62,17 @@ public class AccountController {
 
     }
 
+    // @GetMapping("/userId/{userId}")
+    // public ResponseEntity<Object> getAccountByUserId(@PathVariable long userId) {
+    //     Optional<AccountModel> accountModelOptional = accountService.findByUserId(userId);
+
+    //     if(!accountModelOptional.isPresent()){
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found!");
+    //     } else {
+    //         return ResponseEntity.status(HttpStatus.OK).body(accountModelOptional.get());
+    //     }
+    // }  
+
     @PostMapping()
     public ResponseEntity<Object> createAccount(@RequestBody @Valid AccountDto accountDto) {
 
