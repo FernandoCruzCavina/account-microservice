@@ -62,4 +62,9 @@ public class AccountServiceImpl implements AccountService {
         return accountModel;
     }
 
+    @Override
+    public Optional<AccountModel> findByUserId(long userId){
+        return accountRepository.findByUser_UserId(userId);
+    }
+
 }

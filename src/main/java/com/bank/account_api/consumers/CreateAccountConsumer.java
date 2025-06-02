@@ -11,7 +11,9 @@ import org.springframework.messaging.handler.annotation.Payload;
 
 import com.bank.account_api.enums.AccountType;
 import com.bank.account_api.models.AccountModel;
-import com.bank.account_api.services.impl.AccountServiceImpl;
+import com.bank.account_api.models.UserModel;
+import com.bank.account_api.repository.UserRepository;
+import com.bank.account_api.services.AccountService;
 import com.bank.account_api.utils.AccountNumberGenerator;
 
 
@@ -19,22 +21,26 @@ public class CreateAccountConsumer {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    AccountServiceImpl accountServiceImpl;
-
+    @Autowired
+    AccountService accountService;
+    @Autowired
+    UserRepository userRepository;
     AccountNumberGenerator accountNumberGenerator;
 
     @RabbitListener(queues = "${broker.queue.create.account}")
     public void createAccount(@Payload long userId){
+        
         var accountModel = new AccountModel();
         accountModel.setBalance(BigDecimal.valueOf(0));
         accountModel.setCreatedAt(Instant.now().getEpochSecond());
         accountModel.setLastUpdatedAt(Instant.now().getEpochSecond());
         accountModel.setAccountType(AccountType.STARDART);
-
-        String newAccountNumber = accountNumberGenerator.generateUniqueAccountNumber();
-
-        accountModel.setAccountNumber(newAccountNumber);
+        accountModel.setAccountNumber(accountNumberGenerator.generateUniqueAccountNumber());
         
-        accountServiceImpl.save(accountModel);
+        var user = new UserModel(userId, accountModel);
+        accountModel.setUser(user);
+
+        accountService.save(accountModel);
+        userRepository.save(user);
     }
 }

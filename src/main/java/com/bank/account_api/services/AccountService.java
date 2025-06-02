@@ -20,4 +20,6 @@ public interface AccountService {
     AccountModel saveAccount(AccountModel accountModel);
 
     Optional<AccountModel> findByPixKey(String pixKey);
+
+    Optional<AccountModel> findByUserId(long userId);
 }
