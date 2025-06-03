@@ -2,15 +2,19 @@ package com.bank.account_api.dtos;
 
 import java.math.BigDecimal;
 
+import org.springframework.beans.BeanUtils;
+
+import com.bank.account_api.models.AccountModel;
+
 import lombok.Data;
 
 @Data
 public class AccountEventDto {
     private Long idAccount;
 
-    private String accountNumber;
-
     private BigDecimal balance;
+
+    private Long accountNumber;
 
     private Long createdAt;
 
@@ -19,4 +23,11 @@ public class AccountEventDto {
     private String imageUrl;
 
     private String actionType;
+
+    public AccountModel convertToAccountModel() {
+        var accountModel = new AccountModel();
+
+        BeanUtils.copyProperties(this, accountModel);
+        return accountModel;
+    }
 }

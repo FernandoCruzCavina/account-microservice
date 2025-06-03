@@ -63,8 +63,25 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Optional<AccountModel> findByUserId(long userId){
+    public Optional<AccountModel> findByUserId(long userId) {
         return accountRepository.findByUser_UserId(userId);
+    }
+
+    @Transactional
+    @Override
+    public void deleteAccount(AccountModel accountModel) {
+        delete(accountModel);
+
+        accountEventPublisher.publishAccountEvent(accountModel.convertToAccountEventDto(), ActionType.DELETE);
+    }
+
+    @Transactional
+    @Override
+    public AccountModel updateAccount(AccountModel accountModel) {
+        accountModel = save(accountModel);
+
+        accountEventPublisher.publishAccountEvent(accountModel.convertToAccountEventDto(), ActionType.UPDATE);
+        return accountModel;
     }
 
 }

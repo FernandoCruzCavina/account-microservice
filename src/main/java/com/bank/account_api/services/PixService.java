@@ -18,4 +18,8 @@ public interface PixService {
 
     PixModel savePix(PixModel pixModel);
 
+    void deletePix(PixModel pixModel);
+
+    PixModel updateAccount(PixModel pixModel);
+
 }

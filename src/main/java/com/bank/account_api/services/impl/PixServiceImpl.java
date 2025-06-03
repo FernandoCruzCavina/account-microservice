@@ -50,7 +50,24 @@ public class PixServiceImpl implements PixService {
     public PixModel savePix(PixModel pixModel) {
         pixModel = save(pixModel);
 
-        pixEventPublisher.publishAccountEvent(pixModel.convertToPixEventDto(), ActionType.CREATE);
+        pixEventPublisher.publishPixEvent(pixModel.convertToPixEventDto(), ActionType.CREATE);
+        return pixModel;
+    }
+
+    @Transactional
+    @Override
+    public void deletePix(PixModel pixModel) {
+        delete(pixModel);
+
+        pixEventPublisher.publishPixEvent(pixModel.convertToPixEventDto(), ActionType.DELETE);
+    }
+
+    @Transactional
+    @Override
+    public PixModel updateAccount(PixModel pixModel) {
+        pixModel = save(pixModel);
+
+        pixEventPublisher.publishPixEvent(pixModel.convertToPixEventDto(), ActionType.UPDATE);
         return pixModel;
     }
 }

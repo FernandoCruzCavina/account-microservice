@@ -16,7 +16,7 @@ public class PixEventPublisher {
     @Value(value = "${broker.exchange.pixEvent}")
     private String exchangePixEvent;
 
-    public void publishAccountEvent(PixEventDto pixEventDto, ActionType actionType) {
+    public void publishPixEvent(PixEventDto pixEventDto, ActionType actionType) {
         pixEventDto.setActionType(actionType.toString());
         rabbitTemplate.convertAndSend(exchangePixEvent, "", pixEventDto);
     }

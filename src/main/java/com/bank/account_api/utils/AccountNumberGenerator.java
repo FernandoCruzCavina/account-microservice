@@ -9,10 +9,10 @@ import com.bank.account_api.repository.AccountRepository;
 @Component
 public class AccountNumberGenerator {
 
+    @Autowired
     private final AccountRepository accountRepository;
     private final Random random = new Random();
 
-    @Autowired
     public AccountNumberGenerator(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }

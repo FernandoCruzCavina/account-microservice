@@ -19,6 +19,10 @@ public interface AccountService {
 
     AccountModel saveAccount(AccountModel accountModel);
 
+    void deleteAccount(AccountModel accountModel);
+
+    AccountModel updateAccount(AccountModel accountModel);
+
     Optional<AccountModel> findByPixKey(String pixKey);
 
     Optional<AccountModel> findByUserId(long userId);
