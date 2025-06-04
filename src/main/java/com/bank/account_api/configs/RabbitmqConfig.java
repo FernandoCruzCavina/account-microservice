@@ -23,6 +23,9 @@ public class RabbitmqConfig {
     @Value(value = "${broker.exchange.pixEventExchange}")
     private String exchangePixEvent;
 
+    @Value(value = "${broker.exchance.userExchange}")
+    private String exchangeUserEvent;
+
     @Bean
     public RabbitTemplate rabbitTemplate() {
         RabbitTemplate template = new RabbitTemplate(cachingConnectionFactory);
@@ -46,6 +49,11 @@ public class RabbitmqConfig {
     @Bean
     public FanoutExchange fanoutExchangePix() {
         return new FanoutExchange(exchangePixEvent);
+    }
+
+    @Bean
+    public FanoutExchange fanoutExchangeUser() {
+        return new FanoutExchange(exchangeUserEvent);
     }
 
 }

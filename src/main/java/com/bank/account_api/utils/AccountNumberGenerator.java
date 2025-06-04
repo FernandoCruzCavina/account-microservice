@@ -10,12 +10,9 @@ import com.bank.account_api.repository.AccountRepository;
 public class AccountNumberGenerator {
 
     @Autowired
-    private final AccountRepository accountRepository;
-    private final Random random = new Random();
+    AccountRepository accountRepository;
 
-    public AccountNumberGenerator(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
-    }
+    Random random = new Random();
 
     public String generateUniqueAccountNumber() {
         String accountNumber;
