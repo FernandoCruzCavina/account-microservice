@@ -58,6 +58,35 @@ public class CreateAccountConsumer {
         }
     }
 
+    @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "${broker.queue.paymentSenderEventQueue}", durable = "true"), exchange = @Exchange(value = "${broker.exchange.paymentSenderExchange}", type = ExchangeTypes.FANOUT, ignoreDeclarationExceptions = "true")))
+    public void listenPaymentSenderEvent(@Payload AccountEventDto accountEventDto) {
+        var accountModel = accountEventDto.convertToAccountModel();
+
+        System.out.println("Chegou a mensagem: " + accountEventDto);
+        Long accountId = accountEventDto.getIdAccount();
+        var existingAccount = accountService.findById(accountId);
+
+        if (existingAccount.isPresent()) {
+            accountModel.setAccountNumber(existingAccount.get().getAccountNumber());
+            accountModel.setAccountType(existingAccount.get().getAccountType());
+            accountService.save(accountModel);
+        }
+    }
+
+    @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "${broker.queue.paymentReceiveEventQueue}", durable = "true"), exchange = @Exchange(value = "${broker.exchange.paymentReceiveExchange}", type = ExchangeTypes.FANOUT, ignoreDeclarationExceptions = "true")))
+    public void listenPaymentReceiveEvent(@Payload AccountEventDto accountEventDto) {
+        var accountModel = accountEventDto.convertToAccountModel();
+
+        System.out.println("Chegou a mensagem: " + accountEventDto);
+        Long accountId = accountEventDto.getIdAccount();
+        var existingAccount = accountService.findById(accountId);
+
+        if (existingAccount.isPresent()) {
+            accountModel.setAccountNumber(existingAccount.get().getAccountNumber());
+            accountModel.setAccountType(existingAccount.get().getAccountType());
+            accountService.save(accountModel);
+        }
+    }
     // @RabbitListener(queues = "${broker.queue.create.account}")
     // public void createAccount(@Payload long userId) {
 

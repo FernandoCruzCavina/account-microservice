@@ -13,7 +13,7 @@ public class PixEventPublisher {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    @Value(value = "${broker.exchange.pixEvent}")
+    @Value(value = "${broker.exchange.pixEventExchange}")
     private String exchangePixEvent;
 
     public void publishPixEvent(PixEventDto pixEventDto, ActionType actionType) {

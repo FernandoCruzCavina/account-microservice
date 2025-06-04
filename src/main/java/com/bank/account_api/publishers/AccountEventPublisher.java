@@ -14,7 +14,7 @@ public class AccountEventPublisher {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    @Value(value = "${broker.exchange.accountEvent}")
+    @Value(value = "${broker.exchange.accountEventExchange}")
     private String exchangeAccountEvent;
 
     public void publishAccountEvent(AccountEventDto accountEventDto, ActionType actionType) {
