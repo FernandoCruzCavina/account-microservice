@@ -100,7 +100,6 @@ public class AccountController {
 
         var accountModel = accountModelOptional.get();
 
-        // Não atualize o accountNumber, mantenha o valor original
         accountModel.setBalance(accountDto.getBalance());
         accountModel.setImageUrl(accountDto.getImageUrl());
         accountModel.setLastUpdatedAt(new Date().getTime());

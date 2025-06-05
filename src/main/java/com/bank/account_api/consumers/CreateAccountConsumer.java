@@ -21,6 +21,7 @@ import com.bank.account_api.enums.CreationType;
 import com.bank.account_api.models.AccountModel;
 import com.bank.account_api.repository.UserRepository;
 import com.bank.account_api.services.AccountService;
+import com.bank.account_api.services.UserService;
 import com.bank.account_api.utils.AccountNumberGenerator;
 
 @Component
@@ -31,7 +32,7 @@ public class CreateAccountConsumer {
     @Autowired
     AccountService accountService;
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @Autowired
     AccountNumberGenerator accountNumberGenerator;
@@ -111,7 +112,7 @@ public class CreateAccountConsumer {
                 userModel.setAccountModel(accountModel);
 
                 accountService.saveAccount(accountModel);
-                userRepository.save(userModel);
+                userService.save(userModel);
                 break;
             default:
                 break;
