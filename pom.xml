@@ -88,6 +88,11 @@
    		</dependency>
 		<dependency>
     		<groupId>org.flywaydb</groupId>
+    		<artifactId>flyway-core</artifactId>
+    		<version>10.13.0</version> <!-- Coloque a versão desejada -->
+		</dependency>
+		<dependency>
+    		<groupId>org.flywaydb</groupId>
     		<artifactId>flyway-mysql</artifactId>
     		<version>11.7.2</version>
 		</dependency>

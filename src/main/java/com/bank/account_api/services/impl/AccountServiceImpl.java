@@ -59,6 +59,7 @@ public class AccountServiceImpl implements AccountService {
         accountModel = save(accountModel);
 
         accountEventPublisher.publishAccountEvent(accountModel.convertToAccountEventDto(), ActionType.CREATE);
+        accountEventPublisher.publishAccountEvent(accountModel.convertToAccountEventDto(), ActionType.CREATE);
         return accountModel;
     }
 
@@ -80,6 +81,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountModel updateAccount(AccountModel accountModel) {
         accountModel = save(accountModel);
 
+        accountEventPublisher.publishAccountEvent(accountModel.convertToAccountEventDto(), ActionType.UPDATE);
         accountEventPublisher.publishAccountEvent(accountModel.convertToAccountEventDto(), ActionType.UPDATE);
         return accountModel;
     }

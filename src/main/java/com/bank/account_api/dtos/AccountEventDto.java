@@ -14,8 +14,6 @@ public class AccountEventDto {
 
     private BigDecimal balance;
 
-    private Long accountNumber;
-
     private Long createdAt;
 
     private Long lastUpdatedAt;

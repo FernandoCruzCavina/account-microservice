@@ -48,13 +48,12 @@ public class CreateAccountConsumer {
                 var existingAccount = accountService.findById(accountId);
 
                 if (existingAccount.isPresent()) {
-                    accountModel.setAccountNumber(existingAccount.get().getAccountNumber());
                     accountModel.setAccountType(existingAccount.get().getAccountType());
                     accountService.save(accountModel);
                 }
                 break;
 
-            // case DELETE:
+            // case DELETE: account
             // accountService.delete(accountEventDto.getIdAccount());
             // break;
             default:

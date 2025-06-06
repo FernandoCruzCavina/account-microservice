@@ -13,8 +13,6 @@ import lombok.Data;
 public class AccountDto {
     private Long idAccount;
 
-    private String accountNumber;
-
     @NotBlank
     @NotNull
     private BigDecimal balance;

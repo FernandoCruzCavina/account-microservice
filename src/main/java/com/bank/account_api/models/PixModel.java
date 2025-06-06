@@ -27,7 +27,7 @@ public class PixModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
     private Long idPix;
 
     @Column(nullable = false)
