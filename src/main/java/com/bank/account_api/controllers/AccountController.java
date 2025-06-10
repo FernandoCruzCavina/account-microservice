@@ -57,7 +57,8 @@ public class AccountController {
 
     @GetMapping("/extrato/{idAccount}")
     public ResponseEntity<List<PaymentModel>> getExtrato(@PathVariable(value = "idAccount") Long idAccount) {
-        return ResponseEntity.status(HttpStatus.OK).body(paymentService.findBySenderAccount(idAccount));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(paymentService.findBySenderAccountOrReceiverAccount(idAccount, idAccount));
 
     }
 

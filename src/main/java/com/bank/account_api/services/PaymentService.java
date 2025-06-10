@@ -8,5 +8,5 @@ import com.bank.account_api.models.PaymentModel;
 public interface PaymentService {
     PaymentModel save(PaymentModel paymentModel);
 
-    List<PaymentModel> findBySenderAccount(Long senderAccount);
+    List<PaymentModel> findBySenderAccountOrReceiverAccount(Long senderAccount, Long receiveAccount);
 }

@@ -8,6 +8,6 @@ import com.bank.account_api.models.PaymentModel;
 
 public interface PaymentRepository extends JpaRepository<PaymentModel, Long> {
 
-    List<PaymentModel> findBySenderAccount(Long senderAccount);
+    List<PaymentModel> findBySenderAccountOrReceiverAccount(Long senderAccount, Long receiveAccount);
 
 }

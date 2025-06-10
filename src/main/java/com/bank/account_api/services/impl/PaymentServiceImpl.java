@@ -21,8 +21,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<PaymentModel> findBySenderAccount(Long senderAccount) {
-        return paymentRepository.findBySenderAccount(senderAccount);
+    public List<PaymentModel> findBySenderAccountOrReceiverAccount(Long senderAccount, Long receiveAccount) {
+        return paymentRepository.findBySenderAccountOrReceiverAccount(senderAccount, receiveAccount);
     }
 
 }
