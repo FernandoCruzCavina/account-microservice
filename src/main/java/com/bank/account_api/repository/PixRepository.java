@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.bank.account_api.enums.PixKeyType;
 import com.bank.account_api.models.PixModel;
 
 public interface PixRepository extends JpaRepository<PixModel, Long> {
@@ -21,4 +22,9 @@ public interface PixRepository extends JpaRepository<PixModel, Long> {
     // @Param("idAccount") Long idPix);
     @Query(value = "SELECT * FROM tb_pixs WHERE account_model_id_account = ?1 AND id_pix = ?2", nativeQuery = true)
     Optional<PixModel> findPixIntoCourse(Long idAccount, Long idPix);
+
+    Optional<PixModel> findByAccountModel_IdAccountAndKeyType(Long idAccount, PixKeyType keyType);
+
+    Optional<PixModel> findByKey(String key);
+
 }

@@ -28,7 +28,6 @@ import com.bank.account_api.services.PixService;
 import jakarta.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping()
 public class PixController {
 
@@ -89,7 +88,7 @@ public class PixController {
 
         pixModel.setAccountModel(accountModeOptional.get());
 
-        pixService.savePix(pixModel);
+        pixService.savePix(pixModel, idAccount);
         return ResponseEntity.status(HttpStatus.CREATED).body(pixModel);
     }
 
@@ -107,7 +106,7 @@ public class PixController {
         pix.setKey(pixDto.getKey());
         pix.setLastUpdatedAt(new Date().getTime());
 
-        pixService.save(pix);
+        pixService.savePix(pix, idAccount);
         return ResponseEntity.status(HttpStatus.OK).body(pix);
     }
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.account_api.enums.ActionType;
+import com.bank.account_api.enums.PixKeyType;
 import com.bank.account_api.models.PixModel;
 import com.bank.account_api.publishers.PixEventPublisher;
 import com.bank.account_api.repository.PixRepository;
@@ -74,11 +75,23 @@ public class PixServiceImpl implements PixService {
 
     @Transactional
     @Override
-    public PixModel savePix(PixModel pixModel) {
-        pixModel = save(pixModel);
+    public PixModel savePix(PixModel pixModel, Long idAccount) {
+        Optional<PixModel> pixModelOptional = findByAccountModel_IdAccountAndKeyType(idAccount, pixModel.getKeyType());
 
+        Optional<PixModel> findKeyPixModelOptional = findByKey(pixModel.getKey());
+
+        if (pixModelOptional.isPresent()) {
+            throw new IllegalArgumentException("O Tipo do pix já existe");
+        }
+
+        if (findKeyPixModelOptional.isPresent()) {
+            throw new IllegalArgumentException("Essa chave pix já existe");
+        }
+
+        pixModel = save(pixModel);
         pixEventPublisher.publishPixEvent(pixModel.convertToPixEventDto(), ActionType.CREATE);
         return pixModel;
+
     }
 
     @Transactional
@@ -96,5 +109,15 @@ public class PixServiceImpl implements PixService {
 
         pixEventPublisher.publishPixEvent(pixModel.convertToPixEventDto(), ActionType.UPDATE);
         return pixModel;
+    }
+
+    @Override
+    public Optional<PixModel> findByAccountModel_IdAccountAndKeyType(Long idAccount, PixKeyType keyType) {
+        return pixRepository.findByAccountModel_IdAccountAndKeyType(idAccount, keyType);
+    }
+
+    @Override
+    public Optional<PixModel> findByKey(String key) {
+        return pixRepository.findByKey(key);
     }
 }

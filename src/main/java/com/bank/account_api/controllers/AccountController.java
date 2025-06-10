@@ -28,7 +28,6 @@ import com.bank.account_api.services.PaymentService;
 import jakarta.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping()
 public class AccountController {
 
