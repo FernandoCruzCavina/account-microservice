@@ -19,7 +19,6 @@ import com.bank.account_api.enums.AccountType;
 import com.bank.account_api.enums.ActionType;
 import com.bank.account_api.enums.CreationType;
 import com.bank.account_api.models.AccountModel;
-import com.bank.account_api.repository.UserRepository;
 import com.bank.account_api.services.AccountService;
 import com.bank.account_api.services.UserService;
 import com.bank.account_api.utils.AccountNumberGenerator;

@@ -32,7 +32,7 @@ public class PixModel implements Serializable {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private PixKeyType pixKeyType;
+    private PixKeyType keyType;
 
     @Column(name = "pix_key", nullable = false, unique = true)
     private String key;

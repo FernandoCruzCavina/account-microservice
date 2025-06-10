@@ -84,7 +84,6 @@ public class PixController {
 
         BeanUtils.copyProperties(pixDto, pixModel);
 
-        pixModel.setPixKeyType(PixKeyType.CPF);
         pixModel.setCreatedAt(new Date().getTime());
         pixModel.setLastUpdatedAt(new Date().getTime());
 

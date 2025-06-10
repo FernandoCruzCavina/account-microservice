@@ -11,6 +11,7 @@ import com.bank.account_api.models.PixModel;
 import com.bank.account_api.publishers.PixEventPublisher;
 import com.bank.account_api.repository.PixRepository;
 import com.bank.account_api.services.PixService;
+import com.bank.account_api.utils.CpfValidator;
 
 import jakarta.transaction.Transactional;
 
@@ -23,6 +24,32 @@ public class PixServiceImpl implements PixService {
     PixEventPublisher pixEventPublisher;
 
     public PixModel save(PixModel pixModel) {
+
+        CpfValidator cpfValidator = new CpfValidator();
+        switch (pixModel.getKeyType()) {
+            case CPF:
+                if (!cpfValidator.isValid(pixModel.getKey())) {
+                    throw new IllegalArgumentException("CPF inválido");
+                }
+                break;
+            case PHONE:
+                if (!pixModel.getKey().matches("^\\+?\\d{10,15}$")) {
+                    throw new IllegalArgumentException("Número de celular inválido, use DDD + Número");
+                }
+                break;
+            case EMAIL:
+                if (!pixModel.getKey().matches("^[\\w.-]+@[a-zA-Z\\d.-]+\\.[a-zA-Z]{2,}$")) {
+                    throw new IllegalArgumentException("Email inválido");
+                }
+                break;
+            case RANDOMKEY:
+                break;
+
+            default:
+                throw new IllegalArgumentException("Chave pix inválida");
+
+        }
+
         return pixRepository.save(pixModel);
     }
 

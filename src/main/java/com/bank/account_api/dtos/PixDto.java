@@ -1,5 +1,6 @@
 package com.bank.account_api.dtos;
 
+import com.bank.account_api.enums.PixKeyType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import jakarta.validation.constraints.NotBlank;
@@ -12,5 +13,9 @@ public class PixDto {
     @NotNull
     @NotBlank
     private String key;
+
+    @NotNull
+    @NotBlank
+    private PixKeyType keyType;
 
 }
