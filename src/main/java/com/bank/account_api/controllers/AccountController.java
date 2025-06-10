@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bank.account_api.dtos.AccountDto;
 import com.bank.account_api.enums.AccountType;
 import com.bank.account_api.models.AccountModel;
+import com.bank.account_api.models.PaymentModel;
 import com.bank.account_api.services.AccountService;
+import com.bank.account_api.services.PaymentService;
 
 import jakarta.validation.Valid;
 
@@ -32,6 +34,9 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     @GetMapping()
     public ResponseEntity<List<AccountModel>> getAllAccounts() {
@@ -47,6 +52,12 @@ public class AccountController {
         } else {
             return ResponseEntity.status(HttpStatus.OK).body(accountModelOptional.get());
         }
+
+    }
+
+    @GetMapping("/extrato/{idAccount}")
+    public ResponseEntity<List<PaymentModel>> getExtrato(@PathVariable(value = "idAccount") Long idAccount) {
+        return ResponseEntity.status(HttpStatus.OK).body(paymentService.findBySenderAccount(idAccount));
 
     }
 

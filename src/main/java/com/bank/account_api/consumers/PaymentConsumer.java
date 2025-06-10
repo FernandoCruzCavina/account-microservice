@@ -24,6 +24,7 @@ public class PaymentConsumer {
     @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "${broker.queue.paymentEventQueue}", durable = "true"), exchange = @Exchange(value = "${broker.exchange.paymentEventExchange}", type = ExchangeTypes.FANOUT, ignoreDeclarationExceptions = "true")))
     public void listenPaymentEvent(@Payload PaymentEventDto paymentEventDto) {
         var paymentModel = paymentEventDto.convertToPaymentModel();
+        paymentModel.setReceiverAccount(paymentEventDto.getReceiverAccount());
 
         paymentService.save(paymentModel);
     }

@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class PaymentEventDto {
     private Long idPayment;
-    private String paymentDescrption;
+    private String paymentDescription;;
     private BigDecimal amountPaid;
     private Long paymentRequestDate;
     private Long paymentCompletionDate;

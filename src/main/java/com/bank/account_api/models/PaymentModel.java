@@ -22,20 +22,20 @@ public class PaymentModel implements Serializable {
     private Long idPayment;
 
     @Column(length = 150)
-    private String paymentDescrption;
+    private String paymentDescription;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private BigDecimal amountPaid;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Long paymentRequestDate;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Long paymentCompletionDate;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Long senderAccount;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Long receiverAccount;
 }
