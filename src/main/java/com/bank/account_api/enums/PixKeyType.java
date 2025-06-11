@@ -1,8 +1,8 @@
 package com.bank.account_api.enums;
 
 public enum PixKeyType {
-    PHONE,
+    CELULAR,
     CPF,
     EMAIL,
-    RANDOMKEY
+    CHAVEALEATORIA
 }
