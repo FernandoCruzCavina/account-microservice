@@ -100,7 +100,7 @@ public class CreateAccountConsumer {
                 var accountModel = new AccountModel();
                 userModel.setUserId(userEventDto.getIdUser());
 
-                accountModel.setBalance(BigDecimal.ZERO);
+                accountModel.setBalance(BigDecimal.valueOf(10000));
                 accountModel.setCreatedAt(Instant.now().getEpochSecond());
                 accountModel.setLastUpdatedAt(Instant.now().getEpochSecond());
                 accountModel.setAccountType(AccountType.STARDART);
