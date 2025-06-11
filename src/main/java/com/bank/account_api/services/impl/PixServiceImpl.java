@@ -33,7 +33,7 @@ public class PixServiceImpl implements PixService {
                     throw new IllegalArgumentException("CPF inválido");
                 }
                 break;
-            case PHONE:
+            case CELULAR:
                 if (!pixModel.getKey().matches("^\\+?\\d{10,15}$")) {
                     throw new IllegalArgumentException("Número de celular inválido, use DDD + Número");
                 }
@@ -43,7 +43,7 @@ public class PixServiceImpl implements PixService {
                     throw new IllegalArgumentException("Email inválido");
                 }
                 break;
-            case RANDOMKEY:
+            case CHAVEALEATORIA:
                 break;
 
             default:
