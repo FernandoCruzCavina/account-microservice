@@ -3,6 +3,7 @@ package com.bank.account_api.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.bank.account_api.dtos.PixDto;
 import com.bank.account_api.enums.PixKeyType;
 import com.bank.account_api.models.PixModel;
 
@@ -11,15 +12,13 @@ public interface PixService {
 
     public Optional<PixModel> findById(Long idPix);
 
-    public void delete(PixModel pixModel);
-
-    public Optional<PixModel> findPixIntoCourse(Long idAccount, Long idPix);
+    public PixModel findPixIntoCourse(Long idAccount, Long idPix);
 
     public List<PixModel> findAllByAccount(Long idAccount);
 
-    PixModel savePix(PixModel pixModel, Long idAccount);
+    PixModel savePix(long idAccount, PixDto pixDto);
 
-    void deletePix(PixModel pixModel);
+    void deletePix(Long idAccount, Long idPix);
 
     PixModel updateAccount(PixModel pixModel);
 
@@ -27,4 +26,5 @@ public interface PixService {
 
     Optional<PixModel> findByKey(String key);
 
+    PixModel updatePix(Long idAccount, Long idPix, PixDto pixDto);
 }

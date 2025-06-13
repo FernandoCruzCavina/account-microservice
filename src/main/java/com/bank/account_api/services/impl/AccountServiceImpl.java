@@ -1,12 +1,16 @@
 package com.bank.account_api.services.impl;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bank.account_api.dtos.AccountDto;
+import com.bank.account_api.enums.AccountType;
 import com.bank.account_api.enums.ActionType;
+import com.bank.account_api.exceptions.AccountNotFoundException;
 import com.bank.account_api.models.AccountModel;
 import com.bank.account_api.publishers.AccountEventPublisher;
 import com.bank.account_api.repository.AccountRepository;
@@ -29,13 +33,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Optional<AccountModel> findById(Long accountId) {
-        return accountRepository.findById(accountId);
-    }
-
-    @Override
-    public AccountModel save(AccountModel accountModel) {
-        return accountRepository.save(accountModel);
+    public AccountModel findById(Long accountId) {
+        AccountModel accountModel = accountRepository.findById(accountId)
+                .orElseThrow(AccountNotFoundException::new);
+        
+        return accountModel;
     }
 
     @Override
@@ -44,19 +46,17 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void delete(AccountModel accountModel) {
-        accountRepository.delete(accountModel);
-    }
-
-    @Override
-    public Optional<AccountModel> findByPixKey(String pixKey) {
-        return accountRepository.findByPixKey(pixKey);
+    public AccountModel findByPixKey(String pixKey) {
+        AccountModel accountModel = accountRepository.findByPixKey(pixKey)
+                .orElseThrow(AccountNotFoundException::new);
+        
+        return accountModel;
     }
 
     @Transactional
     @Override
     public AccountModel saveAccount(AccountModel accountModel) {
-        accountModel = save(accountModel);
+        accountModel = accountRepository.save(accountModel);
 
         accountEventPublisher.publishAccountEvent(accountModel.convertToAccountEventDto(), ActionType.CREATE);
         accountEventPublisher.publishAccountEvent(accountModel.convertToAccountEventDto(), ActionType.CREATE);
@@ -64,22 +64,51 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Optional<AccountModel> findByUserId(long userId) {
-        return accountRepository.findByUser_UserId(userId);
+    public AccountModel createAccount(AccountDto accountDto){
+        var accountModel = new AccountModel();
+
+        BeanUtils.copyProperties(accountDto, accountModel);
+
+        accountModel.setAccountType(AccountType.STARDART);
+        accountModel.setCreatedAt(new Date().getTime());
+        accountModel.setLastUpdatedAt(new Date().getTime());
+
+        accountModel = saveAccount(accountModel);
+
+        return accountModel;
+    }
+
+    @Override
+    public AccountModel findByUserId(long userId) {
+        AccountModel accountModel = accountRepository.findByUser_UserId(userId)
+                .orElseThrow(AccountNotFoundException::new);
+        
+        return accountModel;
     }
 
     @Transactional
     @Override
-    public void deleteAccount(AccountModel accountModel) {
-        delete(accountModel);
+    public void deleteAccount(Long idAccount) {
+        var account = accountRepository.findById(idAccount)
+                .orElseThrow(AccountNotFoundException::new);
 
-        accountEventPublisher.publishAccountEvent(accountModel.convertToAccountEventDto(), ActionType.DELETE);
+        accountRepository.delete(account);
+
+        accountEventPublisher.publishAccountEvent(account.convertToAccountEventDto(), ActionType.DELETE);
     }
 
     @Transactional
     @Override
-    public AccountModel updateAccount(AccountModel accountModel) {
-        accountModel = save(accountModel);
+    public AccountModel updateAccount(Long idAccount, AccountDto accountDto) {
+
+        AccountModel accountModel = accountRepository.findById(idAccount)
+                .orElseThrow(AccountNotFoundException::new);
+
+        accountModel.setBalance(accountDto.getBalance());
+        accountModel.setImageUrl(accountDto.getImageUrl());
+        accountModel.setLastUpdatedAt(new Date().getTime());
+
+        accountModel = accountRepository.save(accountModel);
 
         accountEventPublisher.publishAccountEvent(accountModel.convertToAccountEventDto(), ActionType.UPDATE);
         accountEventPublisher.publishAccountEvent(accountModel.convertToAccountEventDto(), ActionType.UPDATE);

@@ -19,6 +19,7 @@ import com.bank.account_api.enums.AccountType;
 import com.bank.account_api.enums.ActionType;
 import com.bank.account_api.enums.CreationType;
 import com.bank.account_api.models.AccountModel;
+import com.bank.account_api.repository.AccountRepository;
 import com.bank.account_api.services.AccountService;
 import com.bank.account_api.services.UserService;
 import com.bank.account_api.utils.AccountNumberGenerator;
@@ -30,6 +31,10 @@ public class CreateAccountConsumer {
 
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    AccountRepository accountRepository;
+
     @Autowired
     UserService userService;
 
@@ -46,10 +51,9 @@ public class CreateAccountConsumer {
                 Long accountId = accountEventDto.getIdAccount();
                 var existingAccount = accountService.findById(accountId);
 
-                if (existingAccount.isPresent()) {
-                    accountModel.setAccountType(existingAccount.get().getAccountType());
-                    accountService.save(accountModel);
-                }
+                
+                accountModel.setAccountType(existingAccount.getAccountType());
+                accountRepository.save(accountModel);
                 break;
 
             // case DELETE: account
@@ -68,11 +72,11 @@ public class CreateAccountConsumer {
         Long accountId = accountEventDto.getIdAccount();
         var existingAccount = accountService.findById(accountId);
 
-        if (existingAccount.isPresent()) {
-            accountModel.setAccountNumber(existingAccount.get().getAccountNumber());
-            accountModel.setAccountType(existingAccount.get().getAccountType());
-            accountService.save(accountModel);
-        }
+        
+        accountModel.setAccountNumber(existingAccount.getAccountNumber());
+        accountModel.setAccountType(existingAccount.getAccountType());
+        accountRepository.save(accountModel);
+
     }
 
     @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "${broker.queue.paymentReceiveEventQueue}", durable = "true"), exchange = @Exchange(value = "${broker.exchange.paymentReceiveExchange}", type = ExchangeTypes.FANOUT, ignoreDeclarationExceptions = "true")))
@@ -83,11 +87,9 @@ public class CreateAccountConsumer {
         Long accountId = accountEventDto.getIdAccount();
         var existingAccount = accountService.findById(accountId);
 
-        if (existingAccount.isPresent()) {
-            accountModel.setAccountNumber(existingAccount.get().getAccountNumber());
-            accountModel.setAccountType(existingAccount.get().getAccountType());
-            accountService.save(accountModel);
-        }
+        accountModel.setAccountNumber(existingAccount.getAccountNumber());
+        accountModel.setAccountType(existingAccount.getAccountType());
+        accountRepository.save(accountModel);
     }
 
     @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "${broker.queue.userEventQueue}", durable = "true"), exchange = @Exchange(value = "${broker.exchance.userExchange}", type = ExchangeTypes.FANOUT, ignoreDeclarationExceptions = "true")))
@@ -117,20 +119,4 @@ public class CreateAccountConsumer {
         }
 
     }
-    // @RabbitListener(queues = "${broker.queue.create.account}")
-    // public void createAccount(@Payload long userId) {
-
-    // var accountModel = new AccountModel();
-    // accountModel.setBalance(BigDecimal.valueOf(0));
-    // accountModel.setCreatedAt(Instant.now().getEpochSecond());
-    // accountModel.setLastUpdatedAt(Instant.now().getEpochSecond());
-    // accountModel.setAccountType(AccountType.STARDART);
-    // accountModel.setAccountNumber(accountNumberGenerator.generateUniqueAccountNumber());
-
-    // var user = new UserModel(userId, accountModel);
-    // accountModel.setUser(user);
-
-    // accountService.save(accountModel);
-    // userRepository.save(user);
-    // }
 }

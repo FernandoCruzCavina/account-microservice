@@ -1,29 +1,27 @@
 package com.bank.account_api.services;
 
 import java.util.List;
-import java.util.Optional;
 
+import com.bank.account_api.dtos.AccountDto;
 import com.bank.account_api.models.AccountModel;
 
 public interface AccountService {
 
     List<AccountModel> findAll();
 
-    Optional<AccountModel> findById(Long accountId);
-
-    AccountModel save(AccountModel accountModel);
+    AccountModel findById(Long accountId);
 
     boolean existsByAccountNumber(String accountNumber);
 
-    void delete(AccountModel accountModel);
-
     AccountModel saveAccount(AccountModel accountModel);
 
-    void deleteAccount(AccountModel accountModel);
+    void deleteAccount(Long idAccount);
 
-    AccountModel updateAccount(AccountModel accountModel);
+    AccountModel updateAccount(Long idAccount, AccountDto accountDto);
 
-    Optional<AccountModel> findByPixKey(String pixKey);
+    AccountModel findByPixKey(String pixKey);
 
-    Optional<AccountModel> findByUserId(long userId);
+    AccountModel findByUserId(long userId);
+
+    AccountModel createAccount(AccountDto accountModel);
 }

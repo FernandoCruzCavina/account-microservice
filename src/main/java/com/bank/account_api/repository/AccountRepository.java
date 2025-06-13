@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.bank.account_api.models.AccountModel;
-import com.bank.account_api.models.PaymentModel;
 
 public interface AccountRepository extends JpaRepository<AccountModel, Long> {
     boolean existsByAccountNumber(String accountNumber);

@@ -10,8 +10,7 @@ import lombok.Data;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PixDto {
-    @NotNull
-    @NotBlank
+
     private String key;
 
     @NotNull

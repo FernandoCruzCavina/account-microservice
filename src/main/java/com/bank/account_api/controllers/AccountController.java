@@ -1,14 +1,10 @@
 package com.bank.account_api.controllers;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.account_api.dtos.AccountDto;
-import com.bank.account_api.enums.AccountType;
 import com.bank.account_api.models.AccountModel;
 import com.bank.account_api.models.PaymentModel;
 import com.bank.account_api.services.AccountService;
@@ -43,15 +38,10 @@ public class AccountController {
     }
 
     @GetMapping("/{idAccount}")
-    public ResponseEntity<Object> getOneAccount(@PathVariable(value = "idAccount") Long accountId) {
-        Optional<AccountModel> accountModelOptional = accountService.findById(accountId);
+    public ResponseEntity<AccountModel> getOneAccount(@PathVariable(value = "idAccount") Long accountId) {
+        AccountModel accountModel = accountService.findById(accountId);
 
-        if (!accountModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found");
-        } else {
-            return ResponseEntity.status(HttpStatus.OK).body(accountModelOptional.get());
-        }
-
+        return ResponseEntity.status(HttpStatus.OK).body(accountModel);
     }
 
     @GetMapping("/extrato/{idAccount}")
@@ -62,73 +52,38 @@ public class AccountController {
     }
 
     @GetMapping("/pix/{pixKey}")
-    public ResponseEntity<Object> getAccountByPixKey(@PathVariable(value = "pixKey") String pixKey) {
-        Optional<AccountModel> accountModelOptional = accountService.findByPixKey(pixKey);
+    public ResponseEntity<AccountModel> getAccountByPixKey(@PathVariable(value = "pixKey") String pixKey) {
+        AccountModel accountModel = accountService.findByPixKey(pixKey);
 
-        if (!accountModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found!");
-        } else {
-            return ResponseEntity.status(HttpStatus.OK).body(accountModelOptional.get());
-        }
-
+        return ResponseEntity.status(HttpStatus.OK).body(accountModel);
     }
 
     @GetMapping("/userId/{userId}")
-    public ResponseEntity<Object> getAccountByUserId(@PathVariable long userId) {
-        Optional<AccountModel> accountModelOptional = accountService.findByUserId(userId);
+    public ResponseEntity<AccountModel> getAccountByUserId(@PathVariable long userId) {
+        AccountModel accountModel = accountService.findByUserId(userId);
 
-        if (!accountModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found!");
-        } else {
-            return ResponseEntity.status(HttpStatus.OK).body(accountModelOptional.get());
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(accountModel);
     }
 
     @PostMapping()
-    public ResponseEntity<Object> createAccount(@RequestBody @Valid AccountDto accountDto) {
-
-        var accountModel = new AccountModel();
-
-        BeanUtils.copyProperties(accountDto, accountModel);
-
-        accountModel.setAccountType(AccountType.STARDART);
-        accountModel.setCreatedAt(new Date().getTime());
-        accountModel.setLastUpdatedAt(new Date().getTime());
-
-        accountService.saveAccount(accountModel);
+    public ResponseEntity<AccountModel> createAccount(@RequestBody @Valid AccountDto accountDto) {
+        AccountModel accountModel = accountService.createAccount(accountDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(accountModel);
     }
 
     @PutMapping("/{idAccount}")
-    public ResponseEntity<Object> updateAccount(@PathVariable(value = "idAccount") Long idAccount,
+    public ResponseEntity<AccountModel> updateAccount(@PathVariable(value = "idAccount") Long idAccount,
             @RequestBody @Valid AccountDto accountDto) {
-        Optional<AccountModel> accountModelOptional = accountService.findById(idAccount);
-
-        if (!accountModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found!");
-        }
-
-        var accountModel = accountModelOptional.get();
-
-        accountModel.setBalance(accountDto.getBalance());
-        accountModel.setImageUrl(accountDto.getImageUrl());
-        accountModel.setLastUpdatedAt(new Date().getTime());
-
-        accountService.updateAccount(accountModel);
+        AccountModel accountModel= accountService.updateAccount(idAccount, accountDto);
+        
         return ResponseEntity.status(HttpStatus.OK).body(accountModel);
     }
 
     @DeleteMapping("/{idAccount}")
-    public ResponseEntity<Object> deleteAccount(@PathVariable(value = "idAccount") Long idAccount) {
-        Optional<AccountModel> accountModelOptional = accountService.findById(idAccount);
-
-        if (!accountModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found!");
-        } else {
-            accountService.delete(accountModelOptional.get());
-            return ResponseEntity.status(HttpStatus.OK).body("account deleted sucessfully!");
-        }
+    public ResponseEntity<String> deleteAccount(@PathVariable(value = "idAccount") Long idAccount) {
+        accountService.deleteAccount(idAccount);
+        
+        return ResponseEntity.status(HttpStatus.OK).body("Conta deletada com sucesso!");
     }
-
 }
