@@ -70,8 +70,8 @@ public class AccountServiceImpl implements AccountService {
         BeanUtils.copyProperties(accountDto, accountModel);
 
         accountModel.setAccountType(AccountType.STARDART);
-        accountModel.setCreatedAt(new Date().getTime());
-        accountModel.setLastUpdatedAt(new Date().getTime());
+        accountModel.setCreatedAt(System.currentTimeMillis());
+        accountModel.setLastUpdatedAt(System.currentTimeMillis());
 
         accountModel = saveAccount(accountModel);
 
@@ -106,7 +106,7 @@ public class AccountServiceImpl implements AccountService {
 
         accountModel.setBalance(accountDto.getBalance());
         accountModel.setImageUrl(accountDto.getImageUrl());
-        accountModel.setLastUpdatedAt(new Date().getTime());
+        accountModel.setLastUpdatedAt(System.currentTimeMillis());
 
         accountModel = accountRepository.save(accountModel);
 

@@ -30,7 +30,7 @@ public class PixModel implements Serializable {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
     private Long idPix;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
     private PixKeyType keyType;
 
